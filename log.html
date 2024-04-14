@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        .logo {
+    background-image: url(logo.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 10vw;  /* Adjust width as needed */
+    height: 20vh;
+    margin-left: 3%; /* Adjust height as needed */
+}
+.left:hover{
+    transform: scale(1.2);
+    transition: 0.2s ease-in-out;
+}
+input[type=submit]:hover{
+    transform: scale(1.2);
+    transition: 0.2s ease-in-out;
+}
+input[type=button]:hover{
+    transform: scale(1.2);
+    transition: 0.2s ease-in-out;
+}
+    
+
+        body{
+        background-color: #cdb4db;    
+        }
+        .container{
+            margin-top: 0;
+            justify-content: center;
+            display: flex;
+            margin-left: 6%;
+        }
+        h1 {
+    margin-top: 0; /* Remove default margin */
+    margin-bottom: 6%; /* Adjust margin as needed */
+    font-size: 8vh; /* Adjust font size as needed */
+}
+        .left{
+            background-image: url("top-view-meals-tasty-yummy-different-pastries-dishes-brown-surface.jpg");
+            padding: 5%;
+            width: 15.8vw;
+            border: 2px solid black;
+            border-radius: 3%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 46vh;  
+            margin: 0;
+        }
+    </style>
+    <base target="_top">
+    <script>
+      function AddRow()
+    {
+      var usernamee = document.getElementById("usernamee").value;
+      var passwordd = document.getElementById("passwordd").value;
+      var email = document.getElementById("email").value;
+      var phone = document.getElementById("phone").value;
+      if (usernamee==""|| passwordd==""|| email==""|| phone=="") {
+        return false;
+      }
+      else {
+      google.script.run.AddRecord(usernamee,passwordd,email,phone);
+      document.getElementById("page2_id1").className = "page2_id1-off";
+      document.getElementById("page3_id1").className = "page3_id1";
+     }
+    }
+
+     function LoginUser()
+    {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    google.script.run.withSuccessHandler(function(output) 
+    {
+      if(output == 'TRUE')
+      {
+         /*document.getElementById("displayusername").innerHTML = username;
+         document.getElementById("page1_id1").className = "page1_class1-off";
+         document.getElementById("page4_id1").className = "page4_id1";*/
+         var url1='https://urjabahad.github.io/recipe2/' 
+         var winRef= window.open(url1);
+         winRed ? google.script.host.close() : window.onload=function() {document.getElementById('url').href = url1;}
+      }
+      else if(output == 'FALSE')
+      {
+        document.getElementById("errorMessage").innerHTML = "Invalid data";     
+      }    
+    }).checkLogin(username, password);
+    }
+    
+function function1(){
+    document.getElementById("page1_id1").className = "page1_class1-off";
+    document.getElementById("page2_id1").className = "page2_id1";
+}
+ 
+function function3(){ 
+  document.getElementById("page3_id1").className = "page3_id1-off";
+  document.getElementById("page1_id1").className = "page1_id1"; 
+}
+
+  </script>
+  <style>
+
+/*page1*/
+.page1_class1-off{
+    display: none;
+  }
+
+
+/*page2*/
+.page2_class1{
+    display: none;
+  }
+
+.page2_id1-off{
+    display:none;
+}
+
+/*page3*/
+.page3_class1{
+    display:none;
+
+}
+.page3_id1-off{
+    display:none;
+}
+
+/*page4*/
+.page4_class1{
+    display:none;
+
+}
+.page4_id1-off{
+    display:none;
+}
+
+input[type=text]:hover{
+        border-bottom:2px solid black;
+      }
+input[type=number]:hover{
+        border-bottom:2px solid black;
+      }
+input[type=password]:hover{
+        border-bottom:2px solid black;
+      }
+
+.user{
+display: inline-block;
+width: 75px;
+height: 75px;
+border: 8px solid black;
+border-radius: 50%;
+position: relative;
+overflow: hidden;
+box-sizing: border-box;
+}
+
+/*the head/*/
+.user::before{
+content: '';
+display: inline-block;
+width: 24px;
+height: 24px;
+background: black;
+border-radius: 50%;
+position: absolute;
+left: calc(50% - 11px);
+top: 10px;
+}
+
+/*the body*/
+.user::after{
+content: '';
+display: inline-block;
+width:50px;
+height:40px;
+background: black;
+border-radius: 50%;
+position: absolute;
+left: calc(50% - 24px);
+top: 39px;
+}
+
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="logo"></div>
+    <br><br>
+<!--page1-->
+<center>
+    
+    <div class="container">
+        <div class="left" style="font-size: 7.5vh; color: white; ">
+        </div>
+        <div class="page1_class1" id="page1_id1" style="background-color: #a2d3fe;border:2px solid gray;border-radius: 20px;width: 40%;padding-top: 10px;padding-bottom: 20px;padding-left: 20px;padding-right: 20px;"> 
+            <h1 style="margin-top: 3%;">Login Form</h1>
+            <br>
+            <input type="text" id="username" placeholder="Username" style="background-color: transparent;border-top: none;border-right: none;border-left: none;outline: none; text-align: center; height : 5vh;font-size:2.5vh ;width: 50%;font-weight:bold; margin-top: 3%;"/><br>
+            <br>
+            <input type="password" id="password" placeholder="Password" style="background-color: transparent;border-top: none;border-right: none;border-left: none;outline: none; text-align: center;font-size:2.5vh ;height : 5vh;width: 50%;font-weight:bold;margin-top: 3%;"/>
+            <br><span id="errorMessage" style="color: red" ></span><br>
+            <input type="submit" value="Login" onclick="LoginUser()"  style="margin: 0 auto; display: block;padding-top: 1%;padding-bottom: 1%;padding-left: 5%;padding-right: 5%;font-size:2.5vh;height : 5vh;font-weight:bold;margin-top: 3%; " /><br>
+            <br><br><br><br>
+            <b style="font-size: 3vh; ">If you don't have an account,</b><input type="button" onClick="function1()" value="Create New" style="margin-left: 2%; padding-top: 1%;padding-bottom: 1%;padding-left: 3%;padding-right: 3%;font-size:2.5vh;height : 5vh;font-weight:bold;margin-top: 3%; " />
+         </div>
+        
+        <!--page2-->
+        <div class="page2_class1" id="page2_id1" style="background-color: #a2d3fe;border:2px solid gray;border-radius: 20px;width: 40%;padding-top: 10px;padding-bottom: 20px;padding-left: 20px;padding-right: 20px;">
+         <h1>Create Account</h1>
+            <input type="text" id="usernamee" placeholder="Name" style="background-color: transparent;border-top: none;border-right: none;border-left: none;outline: none; text-align: center; height : 5vh;font-size:2.5vh ;width: 50%;font-weight:bold; margin-top: 3%;"/><br>
+            <br>
+            <input type="password" id="passwordd" placeholder="Create password" style="background-color: transparent;border-top: none;border-right: none;border-left: none;outline: none; text-align: center; height : 5vh;font-size:2.5vh ;width: 50%;font-weight:bold; margin-top: 3%;" /><br>
+                <br>
+            <input type="text" id="email" placeholder="Email" style="background-color: transparent;border-top: none;border-right: none;border-left: none;outline: none; text-align: center; height : 5vh;font-size:2.5vh ;width: 50%;font-weight:bold; margin-top: 3%;"/><br>
+            <br>
+            <input type="number" id="phone" placeholder="Phone no." style="background-color: transparent;border-top: none;border-right: none;border-left: none;outline: none; text-align: center; height : 5vh;font-size:2.5vh ;width: 50%;font-weight:bold; margin-top: 3%;" /><br><br>
+            <b style="color:red;font-size: 1.5vh;">Password must contain letters and numbers. It will not work without letters and numbers.</b><br><br>
+            <input type="submit" value="Create" onclick="AddRow()" style="margin-left: 2%; padding-top: 1%;padding-bottom: 1%;padding-left: 3%;padding-right: 3%;font-size:2.5vh;height : 5vh;font-weight:bold;margin-top: 3%;" />
+            <br>
+        </div>
+        
+        <!--page3-->
+         <div class="page3_class1" id="page3_id1" style="background:none;border:2px solid gray;border-radius: 20px;width: 250px;padding-top: 10px;padding-bottom: 20px;padding-left: 20px;padding-right: 20px;"><center>
+            <h2> Your account has been successfully created. Login to your account</h2>
+            <input type="submit"  onClick="function3()" value="Login" style="font-weight:bold;"><br>
+            
+         </div> 
+        
+        <!--page4-->
+        <div class="page4_class1" id="page4_id1" style="background:none;border:2px solid gray;border-radius: 20px;width: 250px;padding-top: 10px;padding-bottom: 20px;padding-left: 20px;padding-right: 20px;" ><center>
+            <br>
+            <h2>Hi <b id="displayusername" style="color:red;"></b>!</h2>
+            <div class="user"></div>
+            <h2> You are successfully logged in.</h2>
+            <h2>**************</h2>
+            
+            <br>
+          </div>
+          
+    </div>
+ 
+</center>
+  </body>
+</html>

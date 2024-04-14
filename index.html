@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RecipeCache</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        /* FONTS */
+        /* VARIABLES */
+        :root {
+            --c-dark: #212529;
+            --c-brand: #A2D2FF;
+            --c-brand-light: #BDE0FE;
+            --c-brand-rgb: 78, 87, 212;
+            --c-body: #727272;
+            --font-base: "ClashDisplay", sans-serif;
+            --box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.08);
+            --transition: all 0.5s ease;
+        }
+
+        /* RESET & HELPERS */
+        body {
+            font-family: var(--font-base);
+            line-height: 1.7;
+            color: var(--c-body);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6 {
+            font-weight: 600;
+            color: var(--c-dark);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--c-brand);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--c-brand-light);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .section-padding {
+            padding-top: 140px;
+            padding-bottom: 140px;
+        }
+
+        .theme-shadow {
+            box-shadow: var(--box-shadow);
+        }
+
+        /* IMAGE ZOOM */
+        .image-zoom {
+            position: relative;
+            /* overflow: hidden; */
+        }
+
+        .image-zoom-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-zoom-wrapper img {
+            transition: var(--transition);
+        }
+
+        .image-zoom:hover .image-zoom-wrapper img {
+            transform: scale(1.1);
+        }
+
+
+        /* NAVBAR */
+        .navbar {
+            box-shadow: var(--box-shadow);
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--c-dark);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--c-brand);
+        }
+
+
+        /* BTN */
+        .btn {
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            border-radius: 0;
+            padding: 10px 24px;
+        }
+
+        .btn-brand {
+            background-color: var(--c-brand);
+            border-color: var(--c-brand);
+            color: white;
+        }
+
+        .btn-brand:hover {
+            background-color: var(--c-brand-light);
+            border-color: var(--c-brand-light);
+            color: white;
+        }
+
+
+        /* HERO */
+        #hero {
+            background: linear-gradient(rgba(var(--c-brand-rgb), 0.507), rgba(var(--c-brand-rgb), 0.438)), url(https://images.unsplash.com/photo-1494597564530-871f2b93ac55?q=80&w=2013&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+            background-position: center;
+            background-size: cover;
+        }
+
+
+        /* SECTION TITLE */
+        .section-title {
+            margin-bottom: 60px;
+        }
+
+        .section-title .line {
+            width: 60px;
+            height: 4px;
+            background-color: var(--c-brand);
+            margin: 16px auto 24px auto;
+        }
+
+        .section-title p {
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        /* ICONBOX */
+        .iconbox {
+            width: 70px;
+            height: 70px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(var(--c-brand-rgb), 0.1);
+            color: var(--c-brand);
+            font-size: 34px;
+            flex: none;
+        }
+
+        /* SERVICE */
+        .service {
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .service::after {
+            content: "";
+            width: 40px;
+            height: 40px;
+            background: rgba(var(--c-brand-rgb), 0.2);
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            transition: var(--transition);
+        }
+
+
+        .service:hover::after {
+            width: 100%;
+            height: 100%;
+            background: var(--c-brand);
+            z-index: -1;
+        }
+
+        .service:hover h5,
+        .service:hover p {
+            color: white;
+        }
+
+        .service:hover .iconbox {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* COUNTER */
+        #counter {
+            background: linear-gradient(rgba(var(--c-brand-rgb), 0.8), rgba(var(--c-brand-rgb), 0.8)), url(https://rbk.h-cdn.co/assets/17/32/3200x1600/landscape-1502294819-chef-ingredients.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* PORTFOLIO */
+        .portfolio-item .iconbox {
+            background-color: var(--c-brand);
+            color: white;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+
+        .portfolio-item:hover .iconbox {
+            opacity: 1;
+            top: 50%;
+        }
+
+        /* TEAM */
+        .team-member-content {
+            background-color: var(--c-brand);
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            width: calc(100% - 50px);
+            transform: translateX(-50%);
+            padding: 24px;
+            transition: var(--transition);
+            opacity: 0;
+            margin-top: -150px;
+        }
+
+        .team-member:hover .team-member-content {
+            opacity: 1;
+            bottom: 24px;
+        }
+
+        /* CONTACT */
+        #contact {
+            position: relative;
+            z-index: 2;
+        }
+
+        #contact::after {
+            content: "";
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(rgba(var(--c-brand-rgb), 0.8), rgba(var(--c-brand-rgb), 0.8)), url(../images/counter.jpg);
+            background-position: center;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        #contact .form-control {
+            border-radius: 0;
+        }
+
+        #contact .form-control:focus {
+            box-shadow: none;
+            border-color: var(--c-brand);
+        }
+
+        /* FOOTER */
+        footer {
+            padding-top: 5px;
+        }
+
+        .footer-top {
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+
+        footer li,
+        footer p,
+        footer a {
+            color: #FFC8DD;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .line {
+            width: 40px;
+            height: 4px;
+            background-color: var(--c-brand);
+            margin-top: 12px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+
+    <!-- NAVBAR -->
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hero">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recipe.html">Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Seasonal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Spotlight</a>
+                    </li>
+                </ul>
+                <form class="d-flex" id="searchForm" action="try1.html" method="GET">
+                    <input class="form-control me-2" type="text" name="query" placeholder="Search for a recipe ..." aria-label="Search">
+                    <button class="btn btn-brand ms-lg-3" type="submit">Search</button>
+                </form>                
+            </div>
+        </div>
+    </nav>
+    <!-- HERO -->
+    <section id="hero" class="min-vh-100 d-flex align-items-center text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 data-aos="fade-left" class="text-uppercase text-white fw-semibold display-1">Welcome to
+                        RecipeCache</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section-padding border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
+                    <div class="section-title">
+                        <h1 class="display-4 fw-semibold">Categories</h1>
+                        <div class="line"></div>
+                        <p>"Discover a world of flavors with our website's diverse categories, encompassing global
+                            cuisines, dietary choices, and meal types for a personalized and satisfying culinary
+                            journey."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 text-center">
+                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="150">
+                    <div class="service theme-shadow p-lg-5 p-4">
+                        <div class="iconbox">
+                            <i class="ri-pen-nib-fill"></i>
+                        </div>
+                        <h5 class="mt-4 mb-3">Vegetarian Curries</h5>
+                        <p>Prepare flavorful vegetarian curries using a variety of vegetables, legumes, and spices. </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="250">
+                    <div class="service theme-shadow p-lg-5 p-4">
+                        <div class="iconbox">
+                            <i class="ri-stack-fill"></i>
+                        </div>
+                        <h5 class="mt-4 mb-3">Grilled Tandoori Dishes</h5>
+                        <p>Opt for grilled tandoori recipes for a healthy twist.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="350">
+                    <div class="service theme-shadow p-lg-5 p-4">
+                        <div class="iconbox">
+                            <i class="ri-ruler-2-fill"></i>
+                        </div>
+                        <h5 class="mt-4 mb-3">Whole Grain Rotis and Breads</h5>
+                        <p>Use whole grains like whole wheat flour to make nutritious rotis or parathas.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="450">
+                    <div class="service theme-shadow p-lg-5 p-4">
+                        <div class="iconbox">
+                            <i class="ri-pie-chart-2-fill"></i>
+                        </div>
+                        <h5 class="mt-4 mb-3">Healthy Rice Varieties</h5>
+                        <p>Explore healthier rice options like brown rice or quinoa for biryanis or pilafs.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="550">
+                    <div class="service theme-shadow p-lg-5 p-4">
+                        <div class="iconbox">
+                            <i class="ri-code-box-line"></i>
+                        </div>
+                        <h5 class="mt-4 mb-3">Salads</h5>
+                        <p>Create salads inspired by Indian flavors.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="650">
+                    <div class="service theme-shadow p-lg-5 p-4">
+                        <div class="iconbox">
+                            <i class="ri-user-2-fill"></i>
+                        </div>
+                        <h5 class="mt-4 mb-3">Protein-Rich Lentil Dishes</h5>
+                        <p>Include lentil-based recipes such as dal, sprouted moong dal salad, or masoor dal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUNTER -->
+    <section id="counter" class="section-padding">
+        <div class="container text-center">
+            <div class="row g-4">
+                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="150">
+                    <h1 class="text-white display-4">5,000+</h1>
+                    <h6 class="text-uppercase mb-0 text-white mt-3">Recipes Counter</h6>
+                </div>
+                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="250">
+                    <h1 class="text-white display-4">3k+</h1>
+                    <h6 class="text-uppercase mb-0 text-white mt-3">User Community Counter</h6>
+                </div>
+                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="350">
+                    <h1 class="text-white display-4">6</h1>
+                    <h6 class="text-uppercase mb-0 text-white mt-3">Daily/Weekly Featured Recipe Counter</h6>
+                </div>
+                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="450">
+                    <h1 class="text-white display-4">20+</h1>
+                    <h6 class="text-uppercase mb-0 text-white mt-3">Categories</h6>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
+                    <div class="section-title">
+                        <h1 class="display-4 fw-semibold">Seasonal Recipes</h1>
+                        <div class="line"></div>
+                        <p>"Seasonal delights: Explore fresh and flavorful recipes tailored to each season's bounty."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
+                    <div class="portfolio-item image-zoom">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://media.istockphoto.com/id/538168264/photo/vegetable-and-meat-skewers-in-a-herb-marinade.jpg?s=612x612&w=0&k=20&c=qoHePaYTT5oz90YeZQ-6XBV_Ant1ePesFbc42zTuhPU="
+                                alt="">
+                        </div>
+                        <a href="https://media.istockphoto.com/id/538168264/photo/vegetable-and-meat-skewers-in-a-herb-marinade.jpg?s=612x612&w=0&k=20&c=qoHePaYTT5oz90YeZQ-6XBV_Ant1ePesFbc42zTuhPU="
+                            data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
+                    </div>
+                    <div class="portfolio-item image-zoom mt-4">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://www.kuchpakrahahai.in/wp-content/uploads/2017/01/Palak-Methi-Paratha-Recipe-Stepwise.jpg"
+                                alt="">
+                        </div>
+                        <a href="https://www.kuchpakrahahai.in/wp-content/uploads/2017/01/Palak-Methi-Paratha-Recipe-Stepwise.jpg"
+                            data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
+                    <div class="portfolio-item image-zoom">
+                        <br>
+                        <div class="image-zoom-wrapper">
+                            <img src="https://media.istockphoto.com/id/1316824320/photo/healthy-quinoa-black-bean-salad-with-mango-and-avocado.jpg?s=612x612&w=0&k=20&c=F91keyvxdH52jJ9yPd4yR8eK3J3GurC80W1F_I8T2-8="
+                                alt="">
+                        </div>
+                        <a href="https://media.istockphoto.com/id/1316824320/photo/healthy-quinoa-black-bean-salad-with-mango-and-avocado.jpg?s=612x612&w=0&k=20&c=F91keyvxdH52jJ9yPd4yR8eK3J3GurC80W1F_I8T2-8="
+                            data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
+                    </div>
+                    <br>
+                    <div class="portfolio-item image-zoom mt-4">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://images.immediate.co.uk/production/volatile/sites/30/2019/12/Winter-soup-recipes-91d3d03.jpg?quality=90&resize=556,505"
+                                alt="">
+                        </div>
+                        <a href="https://images.immediate.co.uk/production/volatile/sites/30/2019/12/Winter-soup-recipes-91d3d03.jpg?quality=90&resize=556,505"
+                            data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-down" data-aos-delay="350">
+                    <div class="portfolio-item image-zoom">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://img.jamieoliver.com/home/wp-content/uploads/2023/03/JO_Easy5_HERO_Asparagus_Eggs_599-e1684153266985-1024x684.jpg"
+                                alt="">
+                        </div>
+                        <a href="https://img.jamieoliver.com/home/wp-content/uploads/2023/03/JO_Easy5_HERO_Asparagus_Eggs_599-e1684153266985-1024x684.jpg"
+                            data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
+                    </div>
+                    <div class="portfolio-item image-zoom mt-4">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://greenbowl2soul.com/wp-content/uploads/2023/03/Quinoa-pulao.jpg" alt="">
+                        </div>
+                        <a href="https://greenbowl2soul.com/wp-content/uploads/2023/03/Quinoa-pulao.jpg"
+                            data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- TEAM -->
+    <section id="team" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
+                    <div class="section-title">
+                        <h1 class="display-4 fw-semibold">Ingredient Spotlight</h1>
+                        <div class="line"></div>
+                        <p>Discover the versatility and culinary magic of featured ingredients in our curated recipes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 text-center ">
+                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
+                    <div class="team-member image-zoom">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://media.istockphoto.com/id/1273511287/photo/fenugreek-seeds.jpg?s=612x612&w=0&k=20&c=OCwggr3K4FrCvIVAhFSSQkaMtGQk0xQ4vMbfhl8hFaU="
+                                alt="">
+                        </div>
+                        <div class="team-member-content">
+                            <h4 class="text-white">Fenugreek (Methi)</h4>
+                            <p class="mb-0 text-white">Regulates blood sugar, aids digestion.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
+                    <div class="team-member image-zoom">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://thumbs.dreamstime.com/b/organic-dry-turmeric-haldi-powder-also-known-as-curcuma-longa-linn-selective-focus-spice-pile-bowl-whole-191159061.jpg"
+                                alt="">
+                        </div>
+                        <div class="team-member-content">
+                            <h4 class="text-white">Turmeric (Haldi)</h4>
+                            <p class="mb-0 text-white">Anti-inflammatory, antioxidant-rich, vibrant spice.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-down" data-aos-delay="350">
+                    <div class="team-member image-zoom">
+                        <div class="image-zoom-wrapper">
+                            <img src="https://www.shutterstock.com/image-photo/cumin-seedindian-spices-arranged-on-600nw-1806663454.jpg"
+                                alt="">
+                        </div>
+                        <div class="team-member-content">
+                            <h4 class="text-white">Cumin (Jeera)</h4>
+                            <p class="mb-0 text-white">Digestive aid, iron source.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FOOTER -->
+    <footer class="bg-dark">
+        <div class="footer-bottom">
+            <p>
+                <center>© Copyright. All Rights Reserved</center>
+            </p>
+        </div>
+    </footer>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+
+        AOS.init({
+            // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+            offset: 120, // offset (in px) from the original trigger point
+            delay: 0, // values from 0 to 3000, with step 50ms
+            duration: 900, // values from 0 to 3000, with step 50ms
+            easing: 'ease', // default easing for AOS animations
+            once: false, // whether animation should happen only once - while scrolling down
+            mirror: false, // whether elements should animate out while scrolling past them
+            anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+
+        });
+    </script>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission behavior
+            
+            const query = document.querySelector('input[name="query"]').value;
+            const apiKey = '3d7823ffc23b4c68a22aa1d854718582';
+            const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}`;
+            
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                // Store the fetched data in session storage
+                sessionStorage.setItem('recipeResults', JSON.stringify(data.results));
+                
+                // Redirect to the new page to display the results
+                window.location.href = 'recipe_results.html';
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    </script>
+    
+    
+    <!-- Add a container to hold the recipe cards -->
+    <div id="recipeResults" class="row"></div>
+    
+    
+</body>
+
+</html>

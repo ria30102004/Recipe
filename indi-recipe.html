@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.5.1/css/all.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <title>Recipe Details</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #instructions p{
+            margin-top: 2%;
+        }.right{
+            background-color: #f8d3b6;
+        }
+        #instructions{
+            padding: 2%;
+            display: none;
+            width: 47vw;
+            font-size: 1.5vh;
+        }
+        #recipeImage{  
+            background-position: center;
+            background-size: cover;      
+            height: 50vh;
+            width: 50vw;
+        }
+        #container{
+            display: flex;
+            margin: 0;
+        }
+        .side{
+            background-color: #cdb4db;
+            width: 20vw;
+            height: 100vh;
+        }
+        ul{
+            margin-top: 5%;
+        }
+        .sel{
+           padding: 3% ;
+           font-size: 3vh;
+           text-align: left;
+           margin-left: 3%;
+        }
+        .sel:hover{
+            cursor: pointer;
+            transform: scale(1.1);
+    transition: 0.3s ease-in-out;
+            background-color: #d7cbde;
+        }
+        li{
+            margin-left: 7%;
+            font-size: large;
+        }
+        .name{
+            background-color: #a1c4fd;
+            width: 30vw;
+            padding-top: 3%;
+            padding-left: 2%;
+            font-size: 3vh;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .title{
+            text-decoration: underline;
+            font-size: 6vh;
+            font-family: "Dancing Script", cursive;
+        }
+        .basic{
+            margin-top: 10%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        p{
+            width: 100%;
+        }
+        .nutri ul{
+            font-size: large;
+            margin-left: 1%;
+            width: 27vw;
+            height: 10vh;
+            justify-content: space-between;
+        }   
+        .ing,.n{
+            margin-top: 5%;
+            font-size: 3.5vh;
+        }
+        #new{
+            display: flex;
+        }
+        .r{
+            margin-left: 2%;
+            margin-top: 2%;
+            font-size: 3.5vh;
+        }
+        i{
+            margin-right: 6%;
+        }
+        a{
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="side">
+            <ul class="list">
+                <li class="sel"><a href="recipe.html"><i class="fa-solid fa-arrow-left"></i>Go back to categories</a></li>
+                <li class="sel" id="downloadBtn"><i class="fa-solid fa-download"></i>Download Recipe</li>
+                <li class="sel"><i class="fa-regular fa-heart"></i>Save to favorites</li>
+            </ul>
+        </div>
+        <div id="new">
+         <div class="name" id="name">
+            <p class="title" id="recipeTitle">Fresh Baked Pancakes</p>
+            <div class="basic">
+                <p class="serve" id="recipeServings"><i class="fa-solid fa-utensils"></i>2 servings</p>
+                <p class="time" id="recipeCookingTime"><i class="fa-solid fa-clock"></i>15 minutes</p>
+            </div>
+                <p class="ing">INGREDIENTS</p>
+                <div class="ingredients"><!--<li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptate accusantium magni ipsam iste natus nemo, praesentium ipsa aliquid numquam id doloremque saepe hic, suscipit exercitationem quam nulla tempora totam!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ipsum vero numquam voluptatibus magnam dolore. V  rem ipsa obcaecati consequatur explicabo, iusto quia eos. Magnam animi voluptate velit perspiciatis!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates debitis itaque necessitatibus repellendus veniam repudiandae voluptatem id dolores? Veritatis ut fugiat quibusdam, modi animi 
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. In amet laborum hic officiis esse vel fugiat at eos illo non et repellendus, sunt perspiciatis a? Accusantium vero nihil quos quod.</li>--></div>
+                <p class="n">Nutritional Information</p>
+                <div class="nutri"><!--Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptate accusantium magni ipsam iste natus nemo, praesentium ipsa aliquid numquam id doloremque saepe hic, suscipit exercitationem quam nulla tempora totam!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ipsum vero numquam voluptatibus magnam dolore. Voluptas dicta sit incidunt distinctio quae nobis ea nulla sunt excepturi maxime tempore, molestiae rem?
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus in voluptas, accusantium, vel voluptatibus explicabo culpa minima architecto quasi ea commodi consequuntur aspernatur labore, voluptatem beatae provident nam eius id!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi id aliquam placeat illum necessitatibus, aut totam deleniti rem ipsa obcaecati consequatur explicabo, iusto quia eos. Magnam animi voluptate velit perspiciatis!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates debitis itaque necessitatibus repellendus veniam repudiandae voluptatem id dolores? Veritatis ut fugiat quibusdam, modi animi excepturi error corrupti vero repellendus quae!
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit delectus tempora, temporibus nihil ipsa ipsam, illo animi blanditiis nisi facere repellendus aliquam laborum esse cum similique odit repellat molestiae provident.
+                    Lorem ipsum dolor sit amet, c --></div>
+        </div>
+        <div class="right">
+        <div id="recipeImage"></div>
+        <p class="r">Directions</p>
+        <div id="instructions">
+        </div></div>
+    </div>
+</div>
+<script>
+    // Get recipe id from URL query parameter
+const urlParams = new URLSearchParams(window.location.search);
+const recipeId = urlParams.get('id');
+const instructionsContainer = document.getElementById('instructions');
+fetch(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=dfdb24521211484f853aa615b909f2e2`)
+            .then(response => response.json())
+            .then(data => {
+                // Check if data has instructions
+                if (data && data.length > 0) {
+                    // Extract instructions from each step
+                    const steps = data[0].steps;
+
+                    // Create HTML elements for each step
+                    const instructionsContainer = document.getElementById('instructions');
+                    steps.forEach(step => {
+                        var stepElement = document.createElement('p');
+                        stepElement.textContent = step.step;
+                        instructionsContainer.appendChild(stepElement);
+                    });
+
+                    // Display the instructions container
+                    instructionsContainer.style.display = 'block';
+                } else {
+                    console.error('No instructions found for the recipe.');
+                }
+            })
+            .catch(error => console.error('Error fetching instructions:', error));
+    const apiUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=dfdb24521211484f853aa615b909f2e2&&includeNutrition=true`;
+        
+    // Fetch data from Spoonacular API
+    $.ajax({
+        url: apiUrl,
+        method: 'GET',
+        success: function (data) {
+            // Update your HTML with ingredients
+            const ingredientsList = data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('');
+            $(".ingredients").html(`<ul>${ingredientsList}</ul>`);
+            const imageUrl = data.image;
+        $("#recipeImage").css("background-image", `url(${imageUrl})`);
+        const recipeTitle = data.title;
+        $("#recipeTitle").text(recipeTitle);
+        const servings = data.servings;
+        const cookingTime = data.readyInMinutes;
+
+        $("#recipeServings").html(`<i class="fa-solid fa-utensils"></i>${servings} servings`);
+        $("#recipeCookingTime").html(`<i class="fa-solid fa-clock"></i>${cookingTime} minutes`);
+            const nutritionInfo =data.nutrition.nutrients.slice(0,10);
+            const nutritionList = nutritionInfo.map(nutrient => `<li>${nutrient.name}: ${nutrient.amount} ${nutrient.unit}</li>`).join('');
+            $(".nutri").html(`<ul>${nutritionList}</ul>`);
+        },
+        error: function (error) {
+            console.error('Error fetching data:', error);
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Add click event listener to the download button
+        document.getElementById("downloadBtn").addEventListener("click", function () {
+            // Get the HTML content of the target page
+            var anotherPageContent = document.getElementById("new").outerHTML; // Replace documentElement with the appropriate selector for the target page
+    
+    
+            // Fetch the image data as base64
+            fetch(recipeImageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = function () {
+                        // Embed the image in the HTML content
+                        anotherPageContent = anotherPageContent.replace('</body>', `<img src="${reader.result}" /></body>`);
+                        anotherPageContent = `<div style="background-color: #e6f7ff">${anotherPageContent}</div>`;
+                        // Create a Blob object from the updated HTML content
+                        var blob = new Blob([anotherPageContent], { type: "text/html" });
+    
+                        // Create a temporary anchor element
+                        var downloadLink = document.createElement("a");
+    
+                        // Set the href attribute to the URL of the Blob object
+                        downloadLink.href = URL.createObjectURL(blob);
+    
+                        // Set the download attribute with the desired filename
+                        downloadLink.download = "downloaded_page.html";
+    
+                        // Append the anchor element to the document body
+                        document.body.appendChild(downloadLink);
+    
+                        // Simulate a click on the anchor element
+                        downloadLink.click();
+    
+                        // Remove the anchor element from the document body
+                        document.body.removeChild(downloadLink);
+                    }
+                });
+        });
+    });
+    
+    </script>
+
+</body>
+</html>

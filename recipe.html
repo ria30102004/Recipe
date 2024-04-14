@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe categories</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<style>
+    body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        overflow-x: hidden;
+        background-color: rgb(252, 228, 207);
+    }
+
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    .left {
+        padding-top: 3vh;
+        overflow-y: auto;
+        transition: 0.6s ease;
+        width: 18vw;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        background-color: #CDB4DB;
+    }
+
+    .right {
+        margin-left: 18%;
+        width: 80%;
+        cursor: pointer;
+    }
+
+    .head {
+        font-size: 3.2vh;
+    }
+
+    .menu {
+        width: 100%;
+        margin-top: 5%;
+    }
+
+    .menu .item {
+        position: relative;
+        cursor: pointer;
+        background-color: transparent;
+    }
+
+    .menu .item button {
+        width: 100%;
+        color: #000;
+        border: none;
+        font-size: 2.6vh;
+        padding: 2% 2%;
+        padding-left: 12%;
+        line-height: 200%;
+
+    }
+
+    .menu .item button:hover {
+        cursor: pointer;
+    }
+
+    .left::-webkit-scrollbar {
+        width: 0px;
+    }
+
+    .item.active .submenu {
+        display: block;
+    }
+
+    .item .submenu.vertical {
+        display: none;
+        flex-direction: column;
+        /* Added to display items vertically */
+    }
+
+    .item .submenu.vertical.visible {
+        display: flex;
+    }
+
+    .item .submenu.vertical button {
+        padding: 10px;
+        /* Adjust the padding as needed */
+        display: block;
+    }
+
+    .item .submenu button {
+        padding-left: 3%;
+    }
+
+    .rotate {
+        transform: rotate(90deg);
+    }
+
+    .subbtn {
+        background-color: transparent;
+        text-align: left;
+    }
+
+    .submenu button {
+        background-color: #d7cbde;
+    }
+
+    button:hover {
+        transform: scale(1.1);
+        transition: 0.3s ease-in-out;
+    }
+
+    #recipe-container {
+        width: 80vw;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #instructions-container {
+        display: none;
+    }
+
+    .recipe {
+        background-color: #faaffca2;
+        background-color: #BDE0FE;
+        border: black solid 2px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: calc(30% - 4%);
+        /* 33.33% for three columns with a gap of 20px */
+        box-sizing: border-box;
+        overflow: hidden;
+        margin-bottom: 3%;
+        padding-top: 3%;
+        padding-bottom: 2%;
+        margin-left: 3%;
+        margin-top: 3%;
+    }
+
+    .recipe-info {
+        color: #29800c;
+        padding-left: 4%;
+        padding-top: 4%;
+        padding-right: 4%;
+    }
+
+    .recipe img {
+        width: 17vw;
+        height: 27vh;
+        align-self: center;
+    }
+
+    p {
+        font-size: 3vh;
+        text-align: center;
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .recipe-title {
+        text-align: center;
+        flex-wrap: wrap;
+        margin-bottom: 3%;
+        margin-top: 3%;
+        font-size: 3vh;
+        font-weight: bold;
+        width: 100%;
+    }
+
+    .recipe:hover {
+        transform: scale(1.08);
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .head p {
+        font-size: 4vh;
+        margin-top: 2%;
+        margin-bottom: 2%;
+    }
+
+    .head h1 {
+        text-align: center;
+        color: #e324b0;
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    <div class="left">
+        <div class="menu">
+            <div class="item" onclick="toggleSubmenu(this)"><button class="subbtn">Cuisines</button>
+                <div class="submenu vertical">
+                    <button onclick="getRecipesbyCuisine('asian'); displayContent(this)">Asian</button>
+                    <button onclick="getRecipesbyCuisine('american'); displayContent(this)">American</button>
+                    <button onclick="getRecipesbyCuisine('british'); displayContent(this)">British</button>
+                    <button onclick="getRecipesbyCuisine('caribbean'); displayContent(this)">Caribbean</button>
+                    <button onclick="getRecipesbyCuisine('chinese'); displayContent(this)">Chinese</button>
+                    <button onclick="getRecipesbyCuisine('european'); displayContent(this)">European</button>
+                    <button onclick="getRecipesbyCuisine('french'); displayContent(this)">French</button>
+                    <button onclick="getRecipesbyCuisine('indian'); displayContent(this)">Indian</button>
+                    <button onclick="getRecipesbyCuisine('italian'); displayContent(this)">Italian</button>
+                    <button onclick="getRecipesbyCuisine('japanese'); displayContent(this)">Japanese</button>
+                    <button onclick="getRecipesbyCuisine('korean'); displayContent(this)">Korean</button>
+                    <button onclick="getRecipesbyCuisine('latin-american'); displayContent(this)">Latin
+                        American</button>
+                    <button onclick="getRecipesbyCuisine('mediterranean'); displayContent(this)">Mediterranean</button>
+                    <button onclick="getRecipesbyCuisine('mexican'); displayContent(this)">Mexican</button>
+                    <button onclick="getRecipesbyCuisine('middle-eastern'); displayContent(this)">Middle
+                        Eastern</button>
+                    <button onclick="getRecipesbyCuisine('thai'); displayContent(this)">Thai</button>
+                    <button onclick="getRecipesbyCuisine('vietnamese'); displayContent(this)">Vietnamese</button>
+                </div>
+            </div>
+            <div class="item"><button onclick="getRecipesbyDiet('vegetarian'); displayContent(this)"
+                    class="subbtn">Vegetarian Vibes</button></div>
+            <div class="item"><button onclick="getRecipesbyDiet('ketogenic'); displayContent(this)" class="subbtn">Keto
+                    Delicacies</button></div>
+            <div class="item"><button onclick="getRecipesbyDiet('vegan'); displayContent(this)" class="subbtn">Vegan
+                    Delights</button></div>
+            <div class="item"><button onclick="getRecipesbyDiet('gluten-free'); displayContent(this)"
+                    class="subbtn">Gluten-free Goodies</button></div>
+            <div class="item"><button onclick="getRecipesbyIntolerance('dairy'); displayContent(this)"
+                    class="subbtn">Lactose Free Delights</button></div>
+            <div class="item"><button onclick="getRecipesbyType('breakfast'); displayContent(this)"
+                    class="subbtn">Breakfast Bliss</button></div>
+            <div class="item"><button onclick="getRecipesbyType('salad'); displayContent(this)" class="subbtn">Savor the
+                    Salad</button></div>
+            <div class="item"><button onclick="getRecipesbyType('soup'); displayContent(this)" class="subbtn">Soulful
+                    Soups</button></div>
+            <div class="item"><button onclick="getRecipesbyType('bread'); displayContent(this)" class="subbtn">Baking
+                    Wonders</button></div>
+            <div class="item"><button onclick="getRecipesbyType('beverage'); displayContent(this)"
+                    class="subbtn">Beverage Bliss</button></div>
+            <div class="item"><button onclick="getRecipesbyType('snack'); displayContent(this)" class="subbtn">Snack
+                    Attack</button></div>
+            <div class="item"><button onclick="getRecipesbyType('dessert'); displayContent(this)" class="subbtn">Dessert
+                    Extravaganza</button></div>
+            <div class="item"><button onclick="getRecipesbyTime(); displayContent(this)" class="subbtn">Half-hour
+                    Hits</button></div>
+            <div class="item"><button onclick="getRecipesbyType('main course'); displayContent(this)"
+                    class="subbtn">Main Course Chronicles</button></div>
+            <div class="item"><button onclick="getRecipesbyType('side dish'); displayContent(this)"
+                    class="subbtn">Harmony of Sides</button></div>
+            <div class="item"><button onclick="getRecipesbyType('appetizer'); displayContent(this)"
+                    class="subbtn">Appetizing Bites</button></div>
+
+            <div class="item"><button onclick="getRecipesbyLowCal(); displayContent(this)"
+                    class="subbtn">Calorie-Conscious Recipes</button></div>
+            <div class="item"><button onclick="getRecipesbyLowCarb(); displayContent(this)" class="subbtn">Low Carb
+                    Recipes</button></div>
+            <div class="item"><button onclick="getRecipesbyHighPro(); displayContent(this)"
+                    class="subbtn">Protein-Packed Plates</button></div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="head">
+            <p class="re">Recipes</p>
+            <h1 class="title">Vegetarian Vibes</h1>
+        </div>
+        <div id="recipe-container">
+            <!--<div class="recipe" id="recipe" onclick="openRecipe()">
+                <img src="data:image/jpeg;base64,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" alt="">
+                <div class="recipe-info">
+                    <p class="recipe-title">Hot dog with Paneer Makhani</p>
+                    <p>Cooking time is 30 minutes</p>
+                </div>
+            </div>
+            <div class="recipe" id="recipe" >
+                <img src="data:image/jpeg;base64,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" alt="">
+                <div class="recipe-info">
+                    <p class="recipe-title">Hot dog with Paneer Makhani</p>
+                    <p>Cooking time is 30 minutes</p>
+                </div>
+            </div>
+            <div class="recipe" id="recipe">
+                <img src="data:image/jpeg;base64,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" alt="">
+                <div class="recipe-info">
+                    <p class="recipe-title">Hot dog with Paneer Makhani</p>
+                    <p>Cooking time is 30 minutes</p>
+                </div>
+            </div>
+            <h1>Recipe Instructions</h1>-->
+
+        </div>
+    </div>
+    <script>
+
+        function toggleSubmenu(element) {
+            element.classList.toggle('active');
+            const submenu = element.querySelector('.submenu');
+            if (submenu) {
+                submenu.classList.toggle('visible');
+            }
+        }
+
+        document.querySelectorAll('.submenu button').forEach(submenuItem => {
+            submenuItem.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+
+        function displayContent(button) {
+            document.querySelector('.title').innerText = button.innerText;
+        }
+
+        function getRecipesbyDiet(category) {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?diet=${category}&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+        function getRecipesbyIntolerance(category) {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?intolerances=${category}&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+
+        function getRecipesbyType(category) {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?type=${category}&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+        function getRecipesbyTime() {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=30&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+
+
+
+        function getRecipesbyCuisine(category) {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?cuisine=${category}&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+
+        function getRecipesbyLowCal() {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?maxCalories=500&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+        function getRecipesbyLowCarb() {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?maxCarbs=150&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+        function getRecipesbyHighPro() {
+            $.ajax({
+                url: `https://api.spoonacular.com/recipes/complexSearch?minProtein=2&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                success: function (res) {
+                    displayRecipes(res.results);
+                }
+            });
+        }
+
+        function displayRecipes(recipes) {
+            const recipeContainer = document.getElementById("recipe-container");
+            recipeContainer.innerHTML = "";
+
+            recipes.forEach(recipe => {
+                const id = recipe.id;
+                $.ajax({
+                    url: `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=9a440afca8c2425f98bca16f2b2e73b1`,
+                    success: function (res) {
+                        recipeDisplay(res);
+                    }
+                });
+            });
+        }
+        function openRecipePage(recipeId) {
+            // Redirect to a new page with the selected recipe's instructions
+            window.location.href = `indi-recipe.html?id=${recipeId}`;
+        }
+        function recipeDisplay(res) {
+            const recipeContainer = document.getElementById("recipe-container");
+            const recipeDiv = document.createElement("div");
+            recipeDiv.classList.add("recipe");
+            recipeDiv.addEventListener('click', () => openRecipePage(res.id));
+            const recipeImage = document.createElement("img");
+            recipeImage.src = res.image;
+
+            const recipeInfo = document.createElement("div");
+            recipeInfo.classList.add("recipe-info");
+
+            const recipeTitle = document.createElement("p");
+            recipeTitle.classList.add("recipe-title");
+            recipeTitle.textContent = res.title;
+
+            const cookingTime = document.createElement("p");
+            cookingTime.textContent = `Cooking time is ${res.readyInMinutes} minutes`;
+
+            recipeInfo.appendChild(recipeTitle);
+            recipeInfo.appendChild(cookingTime);
+
+            recipeDiv.appendChild(recipeImage);
+            recipeDiv.appendChild(recipeInfo);
+
+            recipeContainer.appendChild(recipeDiv);
+        }
+
+        getRecipesbyDiet('vegetarian');
+    </script>
+
+</body>
+
+</html>
